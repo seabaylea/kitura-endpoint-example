@@ -15,7 +15,7 @@ func initializeMyRoutes(app: App) {
         }
     }
     
-    private func getStatus(user: UserAuth, respondWith: @escaping (Status?, RequestError?) -> Void) -> Void {
+    private func getStatusSecure(user: UserAuth, respondWith: @escaping (Status?, RequestError?) -> Void) -> Void {
         if health.status.state == .UP {
             respondWith(health.status, nil)
         } else {
