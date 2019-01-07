@@ -1,0 +1,28 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: my-kitura-endpoint 
+  namespace: default
+spec:
+  runLatest:
+    configuration:
+      build:
+        apiVersion: build.knative.dev/v1alpha1
+        kind: Build
+        spec:
+          timeout: 30m
+          serviceAccountName: build-bot
+          source:
+            git:
+              url: https://github.com/seabaylea/kitura-endpoint-example.git
+              revision: master
+          template:
+            name: kitura-endpoint-build 
+            arguments:
+              - name: IMAGE
+                value: docker.io/seabaylea/kitura-endpoint-example:latest
+      revisionTemplate:
+        spec:
+          container:
+            image: docker.io/seabaylea/kitura-endpoint-example:latest
+            imagePullPolicy: Always 
